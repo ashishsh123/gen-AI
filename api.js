@@ -55,7 +55,8 @@ app.post("/summary", async (req, res) => {
 /*CONTENT GENERATION */
 app.post("/generation", async (req, res) => {
   try {
-    const { genres, writeType, nature, purpose, inputText } = req.body;
+    const { genres, writeType, nature, purpose, inputText, editorial, tone } =
+      req.body;
 
     if (!inputText) {
       return res.status(400).json({ error: "Please provide a story." });
@@ -65,7 +66,7 @@ app.post("/generation", async (req, res) => {
     const conversation = [
       {
         role: "user",
-        content: `Generate Content on the basis of given input. Genre: ${genres}\nWrite Type: ${writeType}\nNature: ${nature}\nPurpose: ${purpose}\n${inputText}`,
+        content: `Generate Content on the basis of given input:- Purpose: ${purpose}\n Genre: ${genres}\n Editorial: ${editorial}\n Tone: ${tone}\n Write Type: ${writeType}\n Nature: ${nature}\n ${inputText}`,
       },
     ];
 
@@ -83,10 +84,10 @@ app.post("/generation", async (req, res) => {
 
     res.json({ summary });
   } catch (error) {
-    console.error("Error during summary generation:", error);
+    console.error("Error during Content generation:", error);
     res
       .status(500)
-      .json({ error: "An error occurred during summary generation." });
+      .json({ error: "An error occurred during Content generation." });
   }
 });
 ///////////////////////////////////////////////////////////////////////////////////////////////////
